@@ -6,6 +6,9 @@ CFLAGS = -O0 -g -Wall -c
 
 OUTPUT_DIR = bin
 OBJ_DIR = obj
+PREFIX   ?= /usr/local/
+API_DIR = ./VL53L0X_1.0.2
+
 
 TARGET_LIB = $(OUTPUT_DIR)/libVL53L0X_Rasp.a
 
@@ -52,5 +55,13 @@ examples:${OUTPUT_DIR} ${TARGET_LIB} $(EXAMPLES_BIN)
 .PHONY: clean
 clean:
 	-${RM} -rf ./$(OUTPUT_DIR)/*  ./$(OBJ_DIR)/*
+
+
+install: $(TARGET_LIB)
+	mkdir -p $(PREFIX)/include/VL53L0X_Rasp
+	cp ./platform/inc/* $(PREFIX)/include/VL53L0X_Rasp
+	cp ${API_DIR}/Api/core/inc/* $(PREFIX)/include/VL53L0X_Rasp
+	mkdir -p $(PREFIX)/lib
+	cp $(TARGET_LIB) $(PREFIX)/lib/libVL53L0X_Rasp.a
 
 
