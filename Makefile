@@ -10,7 +10,8 @@ PREFIX   ?= /usr/local/
 API_DIR = ./VL53L0X_1.0.2
 
 
-TARGET_LIB = $(OUTPUT_DIR)/libVL53L0X_Rasp.a
+TARGET_LIB = $(OUTPUT_DIR)/libvl53l0x.a
+TARGET_SO  = $(OUTPUT_DIR)/libvl53l0x.so
 
 INCLUDES = \
 	-I. \
@@ -38,9 +39,14 @@ EXAMPLES_BIN = $(EXAMPLES_SRC:examples/%.c=$(OUTPUT_DIR)/%)
 .PHONY: all
 all: ${TARGET_LIB}
 
+shlib: ${TARGET_SO}
+
 $(TARGET_LIB): $(LIB_OBJS)
 	mkdir -p $(dir $@)
 	$(AR) -rcs $@ $^
+
+$(TARGET_SO): $(LIB_OBJS)
+	$(CC) --shared -L$(OUTPUT_DIR) $^ -o $@
 
 $(OBJ_DIR)/%.o:%.c
 	mkdir -p $(dir $@)
@@ -48,7 +54,7 @@ $(OBJ_DIR)/%.o:%.c
 
 $(EXAMPLES_BIN): bin/%:examples/%.c
 	mkdir -p $(dir $@)
-	$(CC) -L$(OUTPUT_DIR) $^ -lVL53L0X_Rasp  $(INCLUDES) -o $@
+	$(CC) -L$(OUTPUT_DIR) $^ -lvl53l0x  $(INCLUDES) -o $@
 
 examples:${OUTPUT_DIR} ${TARGET_LIB} $(EXAMPLES_BIN)
 

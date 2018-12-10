@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright © 2016, STMicroelectronics International N.V.
+Copyright 2016, STMicroelectronics International N.V.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -53,7 +53,7 @@ extern "C" {
 /** PAL SPECIFICATION minor version */
 #define VL53L0X10_SPECIFICATION_VER_MINOR   2
 /** PAL SPECIFICATION sub version */
-#define VL53L0X10_SPECIFICATION_VER_SUB	   7
+#define VL53L0X10_SPECIFICATION_VER_SUB	    7
 /** PAL SPECIFICATION sub version */
 #define VL53L0X10_SPECIFICATION_VER_REVISION 1440
 
@@ -62,7 +62,7 @@ extern "C" {
 /** VL53L0X PAL IMPLEMENTATION minor version */
 #define VL53L0X10_IMPLEMENTATION_VER_MINOR	0
 /** VL53L0X PAL IMPLEMENTATION sub version */
-#define VL53L0X10_IMPLEMENTATION_VER_SUB		9
+#define VL53L0X10_IMPLEMENTATION_VER_SUB        9
 /** VL53L0X PAL IMPLEMENTATION sub version */
 #define VL53L0X10_IMPLEMENTATION_VER_REVISION	3673
 
@@ -80,9 +80,9 @@ extern "C" {
 /** VL53L0X PAL IMPLEMENTATION minor version */
 #define VL53L0X_IMPLEMENTATION_VER_MINOR	  0
 /** VL53L0X PAL IMPLEMENTATION sub version */
-#define VL53L0X_IMPLEMENTATION_VER_SUB	  2
+#define VL53L0X_IMPLEMENTATION_VER_SUB            2
 /** VL53L0X PAL IMPLEMENTATION sub version */
-#define VL53L0X_IMPLEMENTATION_VER_REVISION	  4823
+#define VL53L0X_IMPLEMENTATION_VER_REVISION       4823
 #define VL53L0X_DEFAULT_MAX_LOOP 2000
 #define VL53L0X_MAX_STRING_LENGTH 32
 
@@ -130,7 +130,12 @@ typedef struct {
 
 typedef int8_t VL53L0X_Error;
 
+#ifdef SWIG_VERSION
+#define VL53L0X_ERROR_NONE		(0)
+#else
 #define VL53L0X_ERROR_NONE		((VL53L0X_Error)	0)
+#endif
+
 #define VL53L0X_ERROR_CALIBRATION_WARNING	((VL53L0X_Error) -1)
 	/*!< Warning invalid calibration data may be in used
 		\a	VL53L0X_InitData()
@@ -143,13 +148,13 @@ typedef int8_t VL53L0X_Error;
 	/*!< Unqualified error */
 #define VL53L0X_ERROR_INVALID_PARAMS			((VL53L0X_Error) -4)
 	/*!< Parameter passed is invalid or out of range */
-#define VL53L0X_ERROR_NOT_SUPPORTED			((VL53L0X_Error) -5)
+#define VL53L0X_ERROR_NOT_SUPPORTED			(-5)
 	/*!< Function is not supported in current mode or configuration */
 #define VL53L0X_ERROR_RANGE_ERROR			((VL53L0X_Error) -6)
 	/*!< Device report a ranging error interrupt status */
-#define VL53L0X_ERROR_TIME_OUT				((VL53L0X_Error) -7)
+#define VL53L0X_ERROR_TIME_OUT				(-7)
 	/*!< Aborted due to time out */
-#define VL53L0X_ERROR_MODE_NOT_SUPPORTED			((VL53L0X_Error) -8)
+#define VL53L0X_ERROR_MODE_NOT_SUPPORTED                ((VL53L0X_Error) -8)
 	/*!< Asked mode is not supported by the device */
 #define VL53L0X_ERROR_BUFFER_TOO_SMALL			((VL53L0X_Error) -9)
 	/*!< ... */
@@ -159,7 +164,7 @@ typedef int8_t VL53L0X_Error;
 	/*!< unsupported GPIO functionality */
 #define VL53L0X_ERROR_INTERRUPT_NOT_CLEARED		((VL53L0X_Error) -12)
 	/*!< Error during interrupt clear */
-#define VL53L0X_ERROR_CONTROL_INTERFACE			((VL53L0X_Error) -20)
+#define VL53L0X_ERROR_CONTROL_INTERFACE			(-20)
 	/*!< error reported from IO functions */
 #define VL53L0X_ERROR_INVALID_COMMAND			((VL53L0X_Error) -30)
 	/*!< The command is not allowed in the current device state
@@ -180,6 +185,15 @@ typedef int8_t VL53L0X_Error;
  */
 typedef uint8_t VL53L0X_DeviceModes;
 
+#ifdef SWIG_VERSION
+#define VL53L0X_DEVICEMODE_SINGLE_RANGING	( 0)
+#define VL53L0X_DEVICEMODE_CONTINUOUS_RANGING	( 1)
+#define VL53L0X_DEVICEMODE_SINGLE_HISTOGRAM	( 2)
+#define VL53L0X_DEVICEMODE_CONTINUOUS_TIMED_RANGING (3)
+#define VL53L0X_DEVICEMODE_SINGLE_ALS		(10)
+#define VL53L0X_DEVICEMODE_GPIO_DRIVE		(20)
+#define VL53L0X_DEVICEMODE_GPIO_OSC		(21)
+#else
 #define VL53L0X_DEVICEMODE_SINGLE_RANGING	((VL53L0X_DeviceModes)  0)
 #define VL53L0X_DEVICEMODE_CONTINUOUS_RANGING	((VL53L0X_DeviceModes)  1)
 #define VL53L0X_DEVICEMODE_SINGLE_HISTOGRAM	((VL53L0X_DeviceModes)  2)
@@ -187,6 +201,7 @@ typedef uint8_t VL53L0X_DeviceModes;
 #define VL53L0X_DEVICEMODE_SINGLE_ALS		((VL53L0X_DeviceModes) 10)
 #define VL53L0X_DEVICEMODE_GPIO_DRIVE		((VL53L0X_DeviceModes) 20)
 #define VL53L0X_DEVICEMODE_GPIO_OSC		((VL53L0X_DeviceModes) 21)
+#endif
 	/* ... Modes to be added depending on device */
 /** @} VL53L0X_define_DeviceModes_group */
 
@@ -198,6 +213,16 @@ typedef uint8_t VL53L0X_DeviceModes;
  */
 typedef uint8_t VL53L0X_HistogramModes;
 
+#ifdef SWIG_VERSION
+#define VL53L0X_HISTOGRAMMODE_DISABLED		(0)
+	/*!< Histogram Disabled */
+#define VL53L0X_HISTOGRAMMODE_REFERENCE_ONLY	(1)
+	/*!< Histogram Reference array only */
+#define VL53L0X_HISTOGRAMMODE_RETURN_ONLY	(2)
+	/*!< Histogram Return array only */
+#define VL53L0X_HISTOGRAMMODE_BOTH		(3)
+	/*!< Histogram both Reference and Return Arrays */
+#else
 #define VL53L0X_HISTOGRAMMODE_DISABLED		((VL53L0X_HistogramModes) 0)
 	/*!< Histogram Disabled */
 #define VL53L0X_HISTOGRAMMODE_REFERENCE_ONLY	((VL53L0X_HistogramModes) 1)
@@ -207,6 +232,7 @@ typedef uint8_t VL53L0X_HistogramModes;
 #define VL53L0X_HISTOGRAMMODE_BOTH		((VL53L0X_HistogramModes) 3)
 	/*!< Histogram both Reference and Return Arrays */
 	/* ... Modes to be added depending on device */
+#endif
 /** @} VL53L0X_define_HistogramModes_group */
 
 
@@ -217,15 +243,25 @@ typedef uint8_t VL53L0X_HistogramModes;
 
 typedef uint8_t VL53L0X_PowerModes;
 
+#ifdef SWIG_VERSION
+#define VL53L0X_POWERMODE_STANDBY_LEVEL1 (0)
+	/*!< Standby level 1 */
+#define VL53L0X_POWERMODE_STANDBY_LEVEL2 (1)
+	/*!< Standby level 2 */
+#define VL53L0X_POWERMODE_IDLE_LEVEL1	 (2)
+	/*!< Idle level 1 */
+#define VL53L0X_POWERMODE_IDLE_LEVEL2	 (3)
+	/*!< Idle level 2 */
+#else
 #define VL53L0X_POWERMODE_STANDBY_LEVEL1 ((VL53L0X_PowerModes) 0)
 	/*!< Standby level 1 */
 #define VL53L0X_POWERMODE_STANDBY_LEVEL2 ((VL53L0X_PowerModes) 1)
 	/*!< Standby level 2 */
-#define VL53L0X_POWERMODE_IDLE_LEVEL1	((VL53L0X_PowerModes) 2)
+#define VL53L0X_POWERMODE_IDLE_LEVEL1	 ((VL53L0X_PowerModes) 2)
 	/*!< Idle level 1 */
-#define VL53L0X_POWERMODE_IDLE_LEVEL2	((VL53L0X_PowerModes) 3)
+#define VL53L0X_POWERMODE_IDLE_LEVEL2	 ((VL53L0X_PowerModes) 3)
 	/*!< Idle level 2 */
-
+#endif
 /** @} VL53L0X_define_PowerModes_group */
 
 
@@ -272,21 +308,37 @@ typedef struct {
 
 typedef uint8_t VL53L0X_State;
 
+#ifdef SWIG_VERSION
+#define VL53L0X_STATE_POWERDOWN		 (0)
+	/*!< Device is in HW reset	*/
+#define VL53L0X_STATE_WAIT_STATICINIT    (1)
+	/*!< Device is initialized and wait for static initialization  */
+#define VL53L0X_STATE_STANDBY		 (2)
+	/*!< Device is in Low power Standby mode   */
+#define VL53L0X_STATE_IDLE               (3)
+	/*!< Device has been initialized and ready to do measurements  */
+#define VL53L0X_STATE_RUNNING		 (4)
+	/*!< Device is performing measurement */
+#define VL53L0X_STATE_UNKNOWN		 (98)
+	/*!< Device is in unknown state and need to be rebooted	 */
+#define VL53L0X_STATE_ERROR              (99)
+	/*!< Device is in error state and need to be rebooted  */
+#else
 #define VL53L0X_STATE_POWERDOWN		 ((VL53L0X_State)  0)
 	/*!< Device is in HW reset	*/
-#define VL53L0X_STATE_WAIT_STATICINIT ((VL53L0X_State)  1)
+#define VL53L0X_STATE_WAIT_STATICINIT    ((VL53L0X_State)  1)
 	/*!< Device is initialized and wait for static initialization  */
 #define VL53L0X_STATE_STANDBY		 ((VL53L0X_State)  2)
 	/*!< Device is in Low power Standby mode   */
-#define VL53L0X_STATE_IDLE			 ((VL53L0X_State)  3)
+#define VL53L0X_STATE_IDLE               ((VL53L0X_State)  3)
 	/*!< Device has been initialized and ready to do measurements  */
 #define VL53L0X_STATE_RUNNING		 ((VL53L0X_State)  4)
 	/*!< Device is performing measurement */
 #define VL53L0X_STATE_UNKNOWN		 ((VL53L0X_State)  98)
 	/*!< Device is in unknown state and need to be rebooted	 */
-#define VL53L0X_STATE_ERROR			 ((VL53L0X_State)  99)
+#define VL53L0X_STATE_ERROR              ((VL53L0X_State)  99)
 	/*!< Device is in error state and need to be rebooted  */
-
+#endif
 /** @} VL53L0X_define_State_group */
 
 
@@ -539,18 +591,17 @@ typedef struct {
  */
 typedef uint8_t VL53L0X_SequenceStepId;
 
-#define	 VL53L0X_SEQUENCESTEP_TCC		 ((VL53L0X_VcselPeriod) 0)
+#define	 VL53L0X_SEQUENCESTEP_TCC		 (0)
 /*!<Target CentreCheck identifier. */
-#define	 VL53L0X_SEQUENCESTEP_DSS		 ((VL53L0X_VcselPeriod) 1)
+#define	 VL53L0X_SEQUENCESTEP_DSS		 (1)
 /*!<Dynamic Spad Selection function Identifier. */
-#define	 VL53L0X_SEQUENCESTEP_MSRC		 ((VL53L0X_VcselPeriod) 2)
+#define	 VL53L0X_SEQUENCESTEP_MSRC		 (2)
 /*!<Minimum Signal Rate Check function Identifier. */
-#define	 VL53L0X_SEQUENCESTEP_PRE_RANGE	 ((VL53L0X_VcselPeriod) 3)
+#define	 VL53L0X_SEQUENCESTEP_PRE_RANGE	         (3)
 /*!<Pre-Range check Identifier. */
-#define	 VL53L0X_SEQUENCESTEP_FINAL_RANGE ((VL53L0X_VcselPeriod) 4)
+#define	 VL53L0X_SEQUENCESTEP_FINAL_RANGE        (4)
 /*!<Final Range Check Identifier. */
-
-#define	 VL53L0X_SEQUENCESTEP_NUMBER_OF_CHECKS			 5
+#define	 VL53L0X_SEQUENCESTEP_NUMBER_OF_CHECKS   (5)
 /*!<Number of Sequence Step Managed by the API. */
 
 /** @} VL53L0X_define_SequenceStepId_group */

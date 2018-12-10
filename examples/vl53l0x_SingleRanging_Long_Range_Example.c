@@ -6,7 +6,7 @@
 
 #define VERSION_REQUIRED_MAJOR 1
 #define VERSION_REQUIRED_MINOR 0
-#define VERSION_REQUIRED_BUILD 1
+#define VERSION_REQUIRED_BUILD 2
 
 
 void print_pal_error(VL53L0X_Error Status){
@@ -70,7 +70,8 @@ VL53L0X_Error rangingTest(VL53L0X_Dev_t *pMyDevice)
 
         // no need to do this when we use VL53L0X_PerformSingleRangingMeasurement
         printf ("Call of VL53L0X_SetDeviceMode\n");
-        Status = VL53L0X_SetDeviceMode(pMyDevice, VL53L0X_DEVICEMODE_SINGLE_RANGING); // Setup in single ranging mode
+	// Setup in single ranging mode
+        Status = VL53L0X_SetDeviceMode(pMyDevice, VL53L0X_DEVICEMODE_SINGLE_RANGING);
         print_pal_error(Status);
     }
 
@@ -142,10 +143,8 @@ VL53L0X_Error rangingTest(VL53L0X_Dev_t *pMyDevice)
 int main(int argc, char **argv)
 {
     VL53L0X_Error Status = VL53L0X_ERROR_NONE;
-    VL53L0X_Dev_t MyDevice;
-    VL53L0X_Dev_t *pMyDevice = &MyDevice;
-    VL53L0X_Version_t                   Version;
-    VL53L0X_Version_t                  *pVersion   = &Version;
+    VL53L0X_Dev_t        pMyDevice[1];
+    VL53L0X_Version_t    pVersion[1];
     VL53L0X_DeviceInfo_t                DeviceInfo;
 
     int32_t status_int;
@@ -155,8 +154,9 @@ int main(int argc, char **argv)
     // Initialize Comms
     pMyDevice->I2cDevAddr      = 0x29;
 
-    pMyDevice->fd = VL53L0X_i2c_init("/dev/i2c-1", pMyDevice->I2cDevAddr);//choose between i2c-0 and i2c-1; On the raspberry pi zero, i2c-1 are pins 2 and 3
-    if (MyDevice.fd<0) {
+    //choose between i2c-0 and i2c-1; On the raspberry pi zero, i2c-1 are pins 2 and 3
+    pMyDevice->fd = VL53L0X_i2c_init("/dev/i2c-1", pMyDevice->I2cDevAddr);
+    if (pMyDevice->fd<0) {
         Status = VL53L0X_ERROR_CONTROL_INTERFACE;
         printf ("Failed to init\n");
     }
@@ -192,13 +192,13 @@ int main(int argc, char **argv)
     if(Status == VL53L0X_ERROR_NONE)
     {
         printf ("Call of VL53L0X_DataInit\n");
-        Status = VL53L0X_DataInit(&MyDevice); // Data initialization
+        Status = VL53L0X_DataInit(pMyDevice); // Data initialization
         print_pal_error(Status);
     }
 
     if(Status == VL53L0X_ERROR_NONE)
     {
-        Status = VL53L0X_GetDeviceInfo(&MyDevice, &DeviceInfo);
+        Status = VL53L0X_GetDeviceInfo(pMyDevice, &DeviceInfo);
         if(Status == VL53L0X_ERROR_NONE)
         {
             printf("VL53L0X_GetDeviceInfo:\n");
@@ -234,9 +234,7 @@ int main(int argc, char **argv)
     VL53L0X_i2c_close();
 
     print_pal_error(Status);
-	
 
-    
     return (0);
 }
 

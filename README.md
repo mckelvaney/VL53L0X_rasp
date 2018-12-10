@@ -58,4 +58,12 @@ Note : I know there are kernel driver sources in the API sources, I don't want t
 
 ![alt text](https://github.com/cassou/VL53L0X_rasp/blob/master/doc/raspi_bb.png "hookup example")
 
+### Distribute to Pypi
+```
+cd python
+python -m pip install --user --upgrade twine
+python  setup.py sdist bdist_wheel
+python3 setup.py bdist_wheel
+twine upload --verbose dist/*
+```
 

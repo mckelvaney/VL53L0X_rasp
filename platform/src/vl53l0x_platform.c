@@ -26,7 +26,7 @@ int VL53L0X_i2c_init(char * devPath, int devAddr)
 
 int32_t VL53L0X_i2c_close(void)
 {
-    printf("%s\n", __FUNCTION__);
+    // printf("%s\n", __FUNCTION__);
     return VL53L0X_ERROR_NOT_IMPLEMENTED;
 }
 
@@ -145,6 +145,6 @@ VL53L0X_Error  VL53L0X_RdDWord(VL53L0X_DEV Dev, uint8_t index, uint32_t *data){
 }
 
 VL53L0X_Error VL53L0X_PollingDelay(VL53L0X_DEV Dev){
-    usleep(5000);
+    usleep(1000);
     return VL53L0X_ERROR_NONE;
 }
