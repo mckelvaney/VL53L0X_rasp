@@ -15,13 +15,13 @@
 
 // Declare functions which will be exported as anything in the vl53l0x_xxx headers.
 %{
-#include "../VL53L0X_1.0.2/Api/core/inc/vl53l0x_def.h"
-#include "../VL53L0X_1.0.2/Api/core/inc/vl53l0x_api.h"
-#include "../platform/inc/vl53l0x_platform.h"
+#include "VL53L0X_1.0.2/Api/core/inc/vl53l0x_def.h"
+#include "VL53L0X_1.0.2/Api/core/inc/vl53l0x_api.h"
+#include "platform/inc/vl53l0x_platform.h"
 
 %}
 
 // Process vl53l0x_api.h header and export all included functions.
-%include "../VL53L0X_1.0.2/Api/core/inc/vl53l0x_api.h"
-%include "../VL53L0X_1.0.2/Api/core/inc/vl53l0x_def.h"
-%include "../platform/inc/vl53l0x_platform.h"
+%include "VL53L0X_1.0.2/Api/core/inc/vl53l0x_api.h"
+%include "VL53L0X_1.0.2/Api/core/inc/vl53l0x_def.h"
+%include "platform/inc/vl53l0x_platform.h"

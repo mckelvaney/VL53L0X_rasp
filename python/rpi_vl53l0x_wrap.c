@@ -3344,9 +3344,9 @@ SWIGINTERN uint32_t *uint32_t_frompointer(uint32_t *t){
     return (uint32_t *)(t);
   }
 
-#include "../VL53L0X_1.0.2/Api/core/inc/vl53l0x_def.h"
-#include "../VL53L0X_1.0.2/Api/core/inc/vl53l0x_api.h"
-#include "../platform/inc/vl53l0x_platform.h"
+#include "VL53L0X_1.0.2/Api/core/inc/vl53l0x_def.h"
+#include "VL53L0X_1.0.2/Api/core/inc/vl53l0x_api.h"
+#include "platform/inc/vl53l0x_platform.h"
 
 
 
