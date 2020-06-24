@@ -2,7 +2,7 @@ CC = $(CROSS_COMPILE)gcc
 AR = $(CROSS_COMPILE)ar
 RM = rm
 
-CFLAGS = -O0 -g -Wall -c
+CFLAGS = -O0 -g -Wall -fPIC -c
 
 OUTPUT_DIR = bin
 OBJ_DIR = obj
