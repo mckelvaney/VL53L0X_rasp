@@ -28,9 +28,8 @@ setup(name              = 'rpi_vl53l0x',
       packages          = ['rpi_vl53l0x'],
       include_package_data = True,
       # py_modules        = ['vl53l0x_api'],
-      ext_modules       = [Extension('_rpi_vl53l0x', 
-                                     include_dirs=['platform/inc', 'VL53L0X_1.0.2/Api/core/inc'],
+      ext_modules       = [Extension('_rpi_vl53l0x',
+                                     include_dirs=['.', 'platform/inc', 'VL53L0X_1.0.2', 'VL53L0X_1.0.2/Api/core/inc'],
                                      sources=['rpi_vl53l0x_wrap.c'],
                                      library_dirs=['lib'],
                                      libraries=['vl53l0x', 'rt'])])
-
